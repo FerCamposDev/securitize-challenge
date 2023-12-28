@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { SCAN_REFRESH_KEY } from "./keys"
-import { getLastTransactions } from "../services/scan.services"
+import { getAddressBalance, getLastTransactions } from "../services/scan.services"
+import { fromWei } from "web3-utils"
 
 export const useGetLastTransaction = (address?: string) => {
   return useQuery({
@@ -14,6 +15,19 @@ export const useGetLastTransaction = (address?: string) => {
       return res.result.at(-1);
     },
     staleTime: Infinity,
-    placeholderData:{ result: [] },
+    placeholderData: { result: [] },
+  })
+}
+
+export const useGetAddressBalance = (address?: string) => {
+  return useQuery({
+    queryKey: [SCAN_REFRESH_KEY, 'balance', address],
+    enabled: Boolean(address),
+    queryFn: () => getAddressBalance(address!),
+    select: (res) => {
+      return Number(fromWei(res.result || 0, 'ether'));
+    },
+    staleTime: Infinity,
+    placeholderData: { result: '0' },
   })
 }

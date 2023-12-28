@@ -19,19 +19,24 @@ const WalletList: React.FC<Props> = ({ wallets = [] }) => {
     setSelectedWallet(newSelection);
   };
 
-  console.log('selectedWallet :>> ', selectedWallet);
-
   return (
-    <Stack>
+    <Stack gap={4}>
       <Grid container justifyContent="space-between" alignItems="center">
-        <Typography>
+        <Typography variant="h6">
           Your wallets
         </Typography>
         <AddWalletModal />
       </Grid>
-      {wallets.map((wallet) => (
-        <WalletItem key={wallet._id} wallet={wallet} onSelect={handleSelect} />
-      ))}
+      <Stack>
+        {wallets.map((wallet) => (
+          <WalletItem
+            key={wallet._id}
+            wallet={wallet}
+            isSelected={selectedWallet?._id === wallet._id}
+            onSelect={handleSelect}
+          />
+        ))}
+      </Stack>
 
       <Collapse in={Boolean(selectedWallet)}>
         <WalletInfo wallet={selectedWallet} />

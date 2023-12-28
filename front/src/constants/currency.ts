@@ -6,6 +6,11 @@ export const mapCurrencyToLabel: Record<FiatCurrency, string> = {
   [FiatCurrency.Euro]: 'Euro',
 }
 
+export const mapCurrencyToSymbol: Record<FiatCurrency, string> = {
+  [FiatCurrency.Dollar]: '$',
+  [FiatCurrency.Euro]: '€'
+}
+
 export const CURRENCY_OPTIONS: ISelectInput<FiatCurrency>[] = [
   {
     label: mapCurrencyToLabel[FiatCurrency.Dollar],

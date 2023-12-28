@@ -21,3 +21,16 @@ export const getLastTransactions = async (address: string): Promise<ScanResult<T
   });
   return res.data;
 }
+
+export const getAddressBalance = async (address: string): Promise<ScanResult<string>> => {
+  const res = await api.get('/', {
+    params: {
+      module: 'account',
+      action: 'balance',
+      address,
+      tag: 'latest',
+      apikey: import.meta.env.VITE_APP_SCAN_API_KEY,
+    }
+  });
+  return res.data;
+}

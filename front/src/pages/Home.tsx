@@ -3,9 +3,7 @@ import { useGetWallets } from "../store/wallets.queries";
 import WalletList from "../components/WalletList";
 
 const HomePage = () => {
-  const { isFetching, data = [], error } = useGetWallets();
-
-  if (isFetching) return 'loading';
+  const { data = [], error } = useGetWallets();
 
   if (error) return <>{error}</>
 

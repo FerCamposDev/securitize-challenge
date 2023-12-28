@@ -1,4 +1,4 @@
-import { Box, Checkbox, Grid, IconButton, Tooltip, Typography } from "@mui/material";
+import { Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from "@mui/material";
 import { Wallet } from "../dto/wallet.dto"
 import { useDeleteWallet, useToggleFavoriteWallet } from "../store/wallets.queries";
 import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
@@ -7,37 +7,48 @@ import { clueAddress } from "../utils/address";
 type Props = {
   wallet: Wallet;
   onSelect: (wallet: Wallet) => void;
+  isSelected: boolean;
 }
 
-const WalletItem: React.FC<Props> = ({ wallet, onSelect }) => {
+const WalletItem: React.FC<Props> = ({ wallet, isSelected, onSelect }) => {
   const toggle = useToggleFavoriteWallet();
   const deleteWallet = useDeleteWallet();
 
   return (
-    <Grid container alignItems="center" justifyContent="space-between">
-      <Box display="flex" alignItems="center">
-        <Tooltip title={wallet.favorite ? 'Set as not favorite' : 'Set as favorite'} arrow>
-          <Checkbox
-            size="small"
-            name="favorite"
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite />}
-            checked={wallet.favorite}
-            onClick={() => toggle.mutate(wallet._id)}
-            disabled={toggle.isPending}
-          />
-        </Tooltip>
-        <Typography variant="body2" onClick={() => onSelect(wallet)} bgcolor="red">
+    <ListItem
+      key={wallet._id}
+      disablePadding
+      secondaryAction={(
+        <IconButton
+          onClick={() => {
+            window.alert('hi');
+            deleteWallet.mutate(wallet._id);
+          }}
+          disabled={deleteWallet.isPending}
+        >
+          <Delete />
+        </IconButton>
+      )}
+    >
+      <ListItemButton selected={isSelected} onClick={() => onSelect(wallet)}>
+        <ListItemIcon>
+          <Tooltip title={wallet.favorite ? 'Set as not favorite' : 'Set as favorite'} arrow>
+            <Checkbox
+              size="small"
+              name="favorite"
+              icon={<FavoriteBorder />}
+              checkedIcon={<Favorite />}
+              checked={wallet.favorite}
+              onClick={() => toggle.mutate(wallet._id)}
+              disabled={toggle.isPending}
+            />
+          </Tooltip>
+        </ListItemIcon>
+        <ListItemText>
           {clueAddress(wallet.address)}
-        </Typography>
-      </Box>
-      <IconButton
-        onClick={() => deleteWallet.mutate(wallet._id)}
-        disabled={deleteWallet.isPending}
-      >
-        <Delete />
-      </IconButton>
-    </Grid>
+        </ListItemText>
+      </ListItemButton>
+    </ListItem>
   )
 }
 

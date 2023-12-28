@@ -3,7 +3,7 @@ import { FiatCurrency } from '../types/currencies'
 import { useGetFiatETHPairs } from '../store/coingecko.queries';
 import { Cached, Close, Done, Edit } from '@mui/icons-material';
 import { ChangeEvent, useState } from 'react';
-import { mapCurrencyToLabel } from '../constants/currency';
+import { mapCurrencyToLabel, mapCurrencyToSymbol } from '../constants/currency';
 import { useQueryClient } from '@tanstack/react-query';
 import { GECKO_PRICE_EDITABLE_KEY } from '../store/keys';
 import { PriceResults } from '../dto/coingecko.dto';
@@ -45,7 +45,7 @@ const ETHPrices: React.FC<Props> = ({ currency }) => {
   }
 
   return (
-    <Card>
+    <Card sx={{ height: 130 }}>
       <CardHeader
         action={isEditing ? (
           <Grid>
@@ -58,7 +58,7 @@ const ETHPrices: React.FC<Props> = ({ currency }) => {
           </Grid>
         ) : (
           <Grid>
-            <Tooltip title="Reload Prices" arrow>
+            <Tooltip title="Reload All Prices" arrow>
               <IconButton size="small" onClick={() => refetch()} color="info">
                 <Cached fontSize="small" />
               </IconButton>
@@ -70,25 +70,29 @@ const ETHPrices: React.FC<Props> = ({ currency }) => {
         )}
       />
       <CardContent>
-        {isEditing ? (
-          <TextField
-            type='number'
-            label={mapCurrencyToLabel[currency]}
-            onChange={handleChangeNewValue}
-            size="small"
-            value={newValue}
-            defaultValue={data?.ethereum[currency]}
-          />
-        ) : (
-          <>
-            <Typography variant="caption">
-              {mapCurrencyToLabel[currency]}:&nbsp;
-            </Typography>
-            <Typography variant="caption" fontWeight={600}>
-              {data?.ethereum[currency]}
-            </Typography>
-          </>
-        )}
+        <Grid container justifyContent="center" alignItems="center">
+          {isEditing ? (
+            <TextField
+              fullWidth
+              autoFocus
+              type='number'
+              label={mapCurrencyToLabel[currency]}
+              onChange={handleChangeNewValue}
+              size="small"
+              value={newValue}
+              defaultValue={data?.ethereum[currency]}
+            />
+          ) : (
+            <>
+              <Typography variant="subtitle2">
+                ETH Price: {mapCurrencyToSymbol[currency]}&nbsp;
+              </Typography>
+              <Typography variant="subtitle2" fontWeight={600}>
+                {data?.ethereum[currency]}
+              </Typography>
+            </>
+          )}
+        </Grid>
       </CardContent>
     </Card>
   )
