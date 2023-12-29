@@ -45,4 +45,5 @@ We're taking into account:
 4\. Your decisions on how you choose to implement.
 
 UI Design:
-<img src="./docs/ui-design.png" width="350" title="ui design">
+
+<img src="./docs/ui-design.png" title="ui design">
