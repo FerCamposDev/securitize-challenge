@@ -1,4 +1,4 @@
-import { Collapse, Grid, Stack, Typography } from '@mui/material'
+import { Collapse, Grid, List, Stack, Typography } from '@mui/material'
 import { Wallet } from '../dto/wallet.dto'
 import WalletItem from './WalletItem';
 import AddWalletModal from './AddWalletModal';
@@ -27,7 +27,7 @@ const WalletList: React.FC<Props> = ({ wallets = [] }) => {
         </Typography>
         <AddWalletModal />
       </Grid>
-      <Stack>
+      <List sx={{ maxHeight: 300, overflowY: 'auto' }}>
         {wallets.map((wallet) => (
           <WalletItem
             key={wallet._id}
@@ -36,7 +36,7 @@ const WalletList: React.FC<Props> = ({ wallets = [] }) => {
             onSelect={handleSelect}
           />
         ))}
-      </Stack>
+      </List>
 
       <Collapse in={Boolean(selectedWallet)}>
         <WalletInfo wallet={selectedWallet} />

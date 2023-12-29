@@ -20,10 +20,7 @@ const WalletItem: React.FC<Props> = ({ wallet, isSelected, onSelect }) => {
       disablePadding
       secondaryAction={(
         <IconButton
-          onClick={() => {
-            window.alert('hi');
-            deleteWallet.mutate(wallet._id);
-          }}
+          onClick={() => deleteWallet.mutate(wallet._id)}
           disabled={deleteWallet.isPending}
         >
           <Delete />

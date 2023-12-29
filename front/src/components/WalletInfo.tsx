@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Wallet } from '../dto/wallet.dto'
 import { useGetAddressBalance, useGetLastTransaction } from '../store/scan.queries'
-import { Alert, Grid, Stack } from '@mui/material'
+import { Alert, Collapse, Grid, Stack } from '@mui/material'
 import { isOneYearAgo } from '../utils/time'
 import ETHPrices from './ETHPrices'
 import { FiatCurrency } from '../types/currencies'
@@ -24,15 +24,17 @@ const WalletInfo: React.FC<Props> = ({ wallet }) => {
 
   return (
     <Stack gap={4}>
-      {walletBalance ? (
-        <Alert severity="success">
-          ETH Balance: {walletBalance}
+      <Stack gap={1}>
+        <Alert severity="info">
+          {walletBalance ? `ETH Balance: ${walletBalance}` : "This wallet doesn't have transactions"}
         </Alert>
-      ) : (
-        <Alert severity="error">
-          {isOldWallet ? "Wallet is old!" : "This wallet doesn't have transactions"}
-        </Alert>
-      )}
+
+        <Collapse in={isOldWallet}>
+          <Alert severity="error">
+            Wallet is old!
+          </Alert>
+        </Collapse>
+      </Stack>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>

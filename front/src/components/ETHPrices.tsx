@@ -19,7 +19,10 @@ const ETHPrices: React.FC<Props> = ({ currency }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newValue, setNewValue] = useState(data?.ethereum[currency]);
 
-  const handleEdit = () => setIsEditing(true);
+  const handleEdit = () =>{
+    setIsEditing(true);
+    if (!newValue) setNewValue(data?.ethereum[currency]);
+  };
 
   const handleClose = () => {
     setIsEditing(false);
@@ -80,7 +83,6 @@ const ETHPrices: React.FC<Props> = ({ currency }) => {
               onChange={handleChangeNewValue}
               size="small"
               value={newValue}
-              defaultValue={data?.ethereum[currency]}
             />
           ) : (
             <>

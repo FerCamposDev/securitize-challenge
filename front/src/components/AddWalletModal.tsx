@@ -15,9 +15,11 @@ import { useAddNewWallet } from '../store/wallets.queries';
 import { NewWallet } from '../dto/wallet.dto';
 import { isAddress } from 'web3-validator';
 
+const initialWallet: NewWallet = { address: '', favorite: false };
+
 const AddWalletModal = () => {
   const [open, setOpen] = useState(false);
-  const [wallet, setWallet] = useState<NewWallet>({ address: '', favorite: false })
+  const [wallet, setWallet] = useState<NewWallet>(initialWallet);
 
   const { mutate, isPending } = useAddNewWallet();
 
@@ -26,7 +28,12 @@ const AddWalletModal = () => {
   const handleClose = () => setOpen(false);
 
   const handleSave = () => {
-    mutate(wallet)
+    mutate(wallet, {
+      onSuccess: () => {
+        handleClose();
+        setWallet(initialWallet);
+      },
+    })
   }
 
   const handleChangeAddress = (event: ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +71,7 @@ const AddWalletModal = () => {
             fullWidth
             variant="standard"
             onChange={handleChangeAddress}
+            value={wallet.address}
             error={isInvalid}
             helperText={isInvalid ? "Invalid address" : ''}
             InputProps={{
