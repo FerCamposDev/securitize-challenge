@@ -1,4 +1,4 @@
-import { Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from "@mui/material";
+import { Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import { Wallet } from "../dto/wallet.dto"
 import { useDeleteWallet, useToggleFavoriteWallet } from "../store/wallets.queries";
 import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
@@ -13,6 +13,9 @@ type Props = {
 const WalletItem: React.FC<Props> = ({ wallet, isSelected, onSelect }) => {
   const toggle = useToggleFavoriteWallet();
   const deleteWallet = useDeleteWallet();
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <ListItem
@@ -42,7 +45,7 @@ const WalletItem: React.FC<Props> = ({ wallet, isSelected, onSelect }) => {
           </Tooltip>
         </ListItemIcon>
         <ListItemText>
-          {clueAddress(wallet.address)}
+          {isMobile ? clueAddress(wallet.address) : wallet.address}
         </ListItemText>
       </ListItemButton>
     </ListItem>

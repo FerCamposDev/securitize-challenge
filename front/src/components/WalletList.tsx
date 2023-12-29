@@ -1,7 +1,6 @@
-import { Collapse, Grid, List, Stack, Typography } from '@mui/material'
+import { Collapse, List, Stack } from '@mui/material'
 import { Wallet } from '../dto/wallet.dto'
 import WalletItem from './WalletItem';
-import AddWalletModal from './AddWalletModal';
 import { useState } from 'react';
 import WalletInfo from './WalletInfo';
 
@@ -21,12 +20,6 @@ const WalletList: React.FC<Props> = ({ wallets = [] }) => {
 
   return (
     <Stack gap={4}>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Typography variant="h6">
-          Your wallets
-        </Typography>
-        <AddWalletModal />
-      </Grid>
       <List sx={{ maxHeight: 300, overflowY: 'auto' }}>
         {wallets.map((wallet) => (
           <WalletItem

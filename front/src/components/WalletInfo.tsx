@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Wallet } from '../dto/wallet.dto'
 import { useGetAddressBalance, useGetLastTransaction } from '../store/scan.queries'
-import { Alert, Collapse, Grid, Stack } from '@mui/material'
+import { Alert, Collapse, Grid, LinearProgress, Stack } from '@mui/material'
 import { isOneYearAgo } from '../utils/time'
 import ETHPrices from './ETHPrices'
 import { FiatCurrency } from '../types/currencies'
@@ -18,7 +18,7 @@ const WalletInfo: React.FC<Props> = ({ wallet }) => {
 
   if (!wallet) return null;
 
-  if (isFetching || isFetchingBalance) return 'Loading';
+  if (isFetching || isFetchingBalance) return <LinearProgress />;
 
   const isOldWallet = isOneYearAgo(transaction?.timeStamp);
 
