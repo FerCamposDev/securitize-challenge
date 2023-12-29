@@ -14,8 +14,11 @@ To get information on ethereum wallet please use https://etherscan.io/apis
 The application have the following requirements:
 
 1\. Add wallet addresses and display them ☑️
+
 2\. From the set of wallets, the user should be able to select favorites and order by them ☑️
+
 3\. We should have a way to know if a wallet is old. A wallet is considered old if the first transaction was performed at least one year ago. ☑️
+
 4\. The user should be able to do the following actions:
 - a) Get exchange rates from Euro and US Dollar to ETH (Ethereum), those can be stored in-memory or in any DB of your preference. ☑️
 - b) Edit the exchange rate of Euro or US Dollar to ETH ☑️
@@ -34,8 +37,11 @@ Please note: You can add things to the design if required.
 We're taking into account:
 
 1\. Functionality.
+
 2\. Your code.
+
 3\. Readiness for production.
+
 4\. Your decisions on how you choose to implement.
 
 UI Design:
